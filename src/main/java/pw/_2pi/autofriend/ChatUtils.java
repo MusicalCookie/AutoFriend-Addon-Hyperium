@@ -1,108 +1,111 @@
 package pw._2pi.autofriend;
 
+import net.minecraft.event.*;
+import net.minecraft.util.*;
+
 public class ChatUtils
 {
-    private final eu parent;
+    private final IChatComponent parent;
     private String text;
-    private ez style;
-    
+    private ChatStyle style;
+
     private ChatUtils(final String text) {
         this(text, null, Inheritance.SHALLOW);
     }
-    
-    private ChatUtils(final String text, final eu parent, final Inheritance inheritance) {
+
+    private ChatUtils(final String text, final IChatComponent parent, final Inheritance inheritance) {
         this.parent = parent;
         this.text = text;
         switch (inheritance) {
             case DEEP: {
-                this.style = ((parent != null) ? parent.b() : new ez());
+                this.style = ((parent != null) ? parent.getChatStyle() : new ChatStyle());
                 break;
             }
             default: {
-                this.style = new ez();
+                this.style = new ChatStyle();
                 break;
             }
             case NONE: {
-                this.style = new ez().a((a)null).a(false).b(false).c(false).d(false).e(false).a((et)null).a((ew)null).a((String)null);
+                this.style = new ChatStyle().setColor((EnumChatFormatting)null).setBold(false).setItalic(false).setStrikethrough(false).setUnderlined(false).setObfuscated(false).setChatClickEvent((ClickEvent)null).setChatHoverEvent((HoverEvent)null).setInsertion((String)null);
                 break;
             }
         }
     }
-    
+
     public static ChatUtils of(final String text) {
         return new ChatUtils(text);
     }
-    
-    public ChatUtils setColor(final a color) {
-        this.style.a(color);
+
+    public ChatUtils setColor(final EnumChatFormatting color) {
+        this.style.setColor(color);
         return this;
     }
-    
+
     public ChatUtils setBold(final boolean bold) {
-        this.style.a(bold);
+        this.style.setBold(bold);
         return this;
     }
-    
+
     public ChatUtils setItalic(final boolean italic) {
-        this.style.b(italic);
+        this.style.setItalic(italic);
         return this;
     }
-    
+
     public ChatUtils setStrikethrough(final boolean strikethrough) {
-        this.style.c(strikethrough);
+        this.style.setStrikethrough(strikethrough);
         return this;
     }
-    
+
     public ChatUtils setUnderlined(final boolean underlined) {
-        this.style.d(underlined);
+        this.style.setUnderlined(underlined);
         return this;
     }
-    
+
     public ChatUtils setObfuscated(final boolean obfuscated) {
-        this.style.e(obfuscated);
+        this.style.setObfuscated(obfuscated);
         return this;
     }
-    
-    public ChatUtils setClickEvent(final et.a action, final String value) {
-        this.style.a(new et(action, value));
+
+    public ChatUtils setClickEvent(final ClickEvent.Action action, final String value) {
+        this.style.setChatClickEvent(new ClickEvent(action, value));
         return this;
     }
-    
+
     public ChatUtils setHoverEvent(final String value) {
-        return this.setHoverEvent((eu)new fa(value));
+        return this.setHoverEvent((IChatComponent)new ChatComponentText(value));
     }
-    
-    public ChatUtils setHoverEvent(final eu value) {
-        return this.setHoverEvent(ew.a.a, value);
+
+    public ChatUtils setHoverEvent(final IChatComponent value) {
+        return this.setHoverEvent(HoverEvent.Action.SHOW_TEXT, value);
     }
-    
-    public ChatUtils setHoverEvent(final ew.a action, final eu value) {
-        this.style.a(new ew(action, value));
+
+    public ChatUtils setHoverEvent(final HoverEvent.Action action, final IChatComponent value) {
+        this.style.setChatHoverEvent(new HoverEvent(action, value));
         return this;
     }
-    
+
     public ChatUtils setInsertion(final String insertion) {
-        this.style.a(insertion);
+        this.style.setInsertion(insertion);
         return this;
     }
-    
+
     public ChatUtils append(final String text) {
         return this.append(text, Inheritance.SHALLOW);
     }
-    
+
     public ChatUtils append(final String text, final Inheritance inheritance) {
         return new ChatUtils(text, this.build(), inheritance);
     }
-    
-    public eu build() {
-        final eu thisComponent = new fa(this.text).a(this.style);
-        return (this.parent != null) ? this.parent.a(thisComponent) : thisComponent;
+
+    public IChatComponent build() {
+        final IChatComponent thisComponent = new ChatComponentText(this.text).setChatStyle(this.style);
+        return (this.parent != null) ? this.parent.appendSibling(thisComponent) : thisComponent;
     }
-    
+
     public enum Inheritance
     {
-        DEEP, 
-        SHALLOW, 
+        DEEP,
+        SHALLOW,
         NONE;
     }
 }
