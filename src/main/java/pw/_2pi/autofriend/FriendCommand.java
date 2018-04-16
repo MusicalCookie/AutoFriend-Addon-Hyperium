@@ -110,7 +110,7 @@ public class FriendCommand implements BaseCommand {
                     }
                 }
             } else if (args[0].equals("info")) {
-                sendMessage(EnumChatFormatting.BLUE + "Forge Version created by" + EnumChatFormatting.RED + " 2PI" + "Ported by" + EnumChatFormatting.RED + " ConorTheOreo");
+                sendMessage(EnumChatFormatting.BLUE + "Forge Version created by" + EnumChatFormatting.RED + " 2PI" + " Ported by" + EnumChatFormatting.RED + " ConorTheOreo");
             }
         } else {
             this.throwError("Unknown Usage, Usage: /autofriend <toggle, messages, recent, blacklist, info>");
