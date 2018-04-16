@@ -1,4 +1,4 @@
-package pw._2pi.autofriend.commands;
+package pw._2pi.autofriend;
 
 import cc.hyperium.commands.BaseCommand;
 import cc.hyperium.commands.CommandException;
