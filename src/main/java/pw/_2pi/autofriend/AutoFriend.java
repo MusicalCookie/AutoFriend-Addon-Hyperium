@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class AutoFriend implements IAddon {
     public static final String MODID = "AutoFriend";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
     public static Minecraft mc;
     public static boolean hypixel;
     public static boolean toggle;
