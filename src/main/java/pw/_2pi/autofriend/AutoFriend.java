@@ -4,7 +4,12 @@ import cc.hyperium.Hyperium;
 import cc.hyperium.commands.BaseCommand;
 import cc.hyperium.event.*;
 import cc.hyperium.internal.addons.IAddon;
+import me.conortheoreo.autofriendport.update.VersionChecker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.event.HoverEvent;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +26,7 @@ public class AutoFriend implements IAddon {
     public static boolean messages;
     public static List<String> blacklist;
     public static List<String> recent;
+    VersionChecker vc = new VersionChecker();
 
     static {
         AutoFriend.mc = Minecraft.getMinecraft();
@@ -51,6 +57,7 @@ public class AutoFriend implements IAddon {
     public void onLoad() {
         System.out.println("AutoFriend loaded!");
         EventBus.INSTANCE.register((Object) this);
+        vc.run();
     }
 
     public void onClose() {
@@ -60,6 +67,10 @@ public class AutoFriend implements IAddon {
     @InvokeEvent
     public void playerLoggedIn(final JoinHypixelEvent event) {
         AutoFriend.hypixel = true;
+
+        if(vc.getLatestVersion() != VERSION) {
+            mc.thePlayer.addChatMessage(ChatUtils.of("AutoFriend Needs an update! Version: " + vc.getLatestVersion() + "." + " Go to: https://github.com/ConorTheOreo/AutoFriend-Addon-Hyperium/releases to download the latest release.").setColor(EnumChatFormatting.RED).setBold(true).build());
+        }
     }
 
     @InvokeEvent
