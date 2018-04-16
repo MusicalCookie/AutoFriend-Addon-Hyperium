@@ -9,9 +9,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import pw._2pi.autofriend.AutoFriend;
-import pw._2pi.autofriend.BlacklistUtils;
-import pw._2pi.autofriend.ChatUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -111,14 +108,12 @@ public class FriendCommand implements BaseCommand {
                     } else {
                         this.throwError("Invalid username. Usage: /autofriend blacklist add/remove <username>");
                     }
-                } else if (args[0].equals("info")) {
-                    sendMessage(EnumChatFormatting.BLUE +"Forge Version created by" + EnumChatFormatting.RED + " 2PI" + "Ported by" + EnumChatFormatting.RED + " ConorTheOreo");
                 }
-            } else {
-                this.throwError("Unknown Argument, arguments are: toggle, messages, recent, blacklist, info");
+            } else if (args[0].equals("info")) {
+                sendMessage(EnumChatFormatting.BLUE + "Forge Version created by" + EnumChatFormatting.RED + " 2PI" + "Ported by" + EnumChatFormatting.RED + " ConorTheOreo");
             }
         } else {
-            this.throwError("Error Occurred, contact dev: ConorTheOreo#0939 on Discord with the latest.log file.");
+            this.throwError("Unknown Usage, Usage: /autofriend <toggle, messages, recent, blacklist, info>");
         }
     }
 
